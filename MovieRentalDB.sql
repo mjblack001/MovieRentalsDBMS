@@ -1,0 +1,84 @@
+CREATE DATABASE MovieRental;
+USE MovieRental;
+
+CREATE TABLE User
+( 
+  UserID INT NOT NULL,
+  Email VARCHAR(255) NOT NULL,
+  Password VARCHAR(255) NOT NULL,
+  Address VARCHAR(255) NOT NULL,
+  PRIMARY KEY (UserID)
+);
+
+CREATE TABLE Director
+(
+  DirectorID INT NOT NULL,
+  DirectorName VARCHAR(255) NOT NULL,
+  PRIMARY KEY (DirectorID)
+);
+
+CREATE TABLE Actor
+(
+  ActorID INT NOT NULL,
+  ActorName VARCHAR(255) NOT NULL,
+  PRIMARY KEY (ActorID)
+);
+
+CREATE TABLE Genre
+(
+  GenreID VARCHAR(25) NOT NULL,
+  GenreName VARCHAR(255) NOT NULL,
+  PRIMARY KEY (GenreID)
+);
+
+CREATE TABLE Movie
+(
+  MovieID INT NOT NULL,
+  MovieName VARCHAR(255) NOT NULL,
+  ReleaseDate DATE NOT NULL,
+  Poster VARCHAR(255),
+  GenreID VARCHAR(25) NOT NULL,
+  DirectorID INT NOT NULL,
+  PRIMARY KEY (MovieID),
+  FOREIGN KEY (GenreID) REFERENCES Genre(GenreID),
+  FOREIGN KEY (DirectorID) REFERENCES Director(DirectorID)
+);
+
+CREATE TABLE Rating
+(
+  RatingID INT NOT NULL,
+  Rating INT NOT NULL,
+  Comment VARCHAR(255),
+  UserID INT NOT NULL,
+  MovieID INT NOT NULL,
+  PRIMARY KEY (RatingID),
+  FOREIGN KEY (MovieID) REFERENCES Movie(MovieID),
+  FOREIGN KEY (UserID) REFERENCES User(UserID)
+);
+
+CREATE TABLE WatchList
+(
+  UserID INT NOT NULL,
+  MovieID INT NOT NULL,
+  FOREIGN KEY (MovieID) REFERENCES Movie(MovieID),
+  FOREIGN KEY (UserID) REFERENCES User(UserID)
+);
+
+CREATE TABLE RentalHistory
+(
+  UserID INT NOT NULL,
+  MovieID INT NOT NULL,
+  DateRented DATE NOT NULL,
+  DateReturned DATE,
+  PRIMARY KEY (DateRented, MovieID, UserID),
+  FOREIGN KEY (MovieID) REFERENCES Movie(MovieID),
+  FOREIGN KEY (UserID) REFERENCES User(UserID)
+);
+
+CREATE TABLE ActedIn
+(
+  MovieID INT NOT NULL,
+  ActorID INT NOT NULL,
+  FOREIGN KEY (MovieID) REFERENCES Movie(MovieID),
+  FOREIGN KEY (ActorID) REFERENCES Actor(ActorID)
+);
