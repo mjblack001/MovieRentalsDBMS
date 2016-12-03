@@ -1905,10 +1905,11 @@ INSERT INTO `Rating` (`RatingID`, `Rating`, `Comment`, `UserID`, `MovieID`) VALU
 --
 
 CREATE TABLE `RentalHistory` (
+  `RentalID` int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
   `UserID` int(11) NOT NULL,
   `MovieID` int(11) NOT NULL,
   `DateRented` date NOT NULL,
-  `DateReturned` date DEFAULT NULL
+  `DateReturned` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
@@ -2171,7 +2172,7 @@ INSERT INTO `RentalHistory` (`UserID`, `MovieID`, `DateRented`, `DateReturned`) 
 (13, 137, '2016-10-25', '2016-11-22'),
 (12, 1, '2016-10-29', '2016-11-15'),
 (8, 58, '2016-11-01', '2016-11-30'),
-(2, 197, '2016-11-11', '2016-11-27'),
+(2, 197, '2016-11-11', '1900-01-01'),
 (12, 135, '2016-11-20', '2016-11-30'),
 (3, 145, '2016-11-22', '2016-11-30'),
 (8, 25, '2016-12-01', '2016-12-04'),
@@ -2353,7 +2354,6 @@ ALTER TABLE `Rating`
 -- Indexes for table `RentalHistory`
 --
 ALTER TABLE `RentalHistory`
-  ADD PRIMARY KEY (`DateRented`,`MovieID`,`UserID`),
   ADD KEY `MovieID` (`MovieID`),
   ADD KEY `UserID` (`UserID`);
 
