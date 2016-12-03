@@ -7,6 +7,8 @@
 </html>
 
 <?php
+    session_start();
+    $_SESSION['UserID'];
 	include("setup.php");
 	if($conn->connect_error)
 	{
@@ -26,8 +28,8 @@
 			AND Movie.MovieID = Rating.MovieID";
 	
 	$result = $conn->query($sql);
-	
-	if($result->num_rows > 0)
+    
+    if($result->num_rows > 0)
 	{
 		while($row = $result->fetch_assoc())
 		{
@@ -41,6 +43,54 @@
 					"</br>";
 		}
 	}
+    
+    if(isset($_POST['watchlist']))
+    {
+        $sql = "INSERT INTO WatchList (UserID, MovieID) VALUES (".$_SESSION['UserID'].", '.$MovieID.')";
+        $result = $conn->query($sql);
+        if($result === TRUE)
+			{
+				header('location: moviesList.php?type=WatchList');
+			}
+			else
+			{
+				echo "Error: ". $sql. "<br>". $conn->error;
+			}
+    }
+    else if(isset($_POST['rent']))
+    {
+        $sql = "INSERT INTO RentalHistory (UserID, MovieID, DateRented, DateReturned) VALUES (".$_SESSION['UserID'].", ".$MovieID.", CURRENT_DATE(), '1900-01-01')";
+        $result = $conn->query($sql);
+        if($result === TRUE)
+			{
+				header('location: moviesList.php?type=RentalHistory');
+			}
+			else
+			{
+				echo "Error: ". $sql. "<br>". $conn->error;
+			}
+    }
+    if(isset($_POST['rated']))
+    {
+        $sql = "SELECT RatingID FROM Rating ORDER BY RatingID DESC LIMIT 1";
+			$result = $conn->query($sql);
+			$IDCheck = $result->fetch_assoc();
+			$newID = $IDCheck['RatingID'];
+			$newID++;
+        $rating = $_POST['rating'];
+        $comment = $_POST['comment'];
+        $sql = "INSERT INTO Rating (RatingID, Rating, Comment, UserID, MovieID) VALUES (".$newID.", ".$rating.", '".$comment."', ".$_SESSION['UserID'].", ".$MovieID.")";
+        $result = $conn->query($sql);
+        if($result === TRUE)
+			{
+				
+			}
+			else
+			{
+				echo "Error: ". $sql. "<br>". $conn->error;
+			}
+    }
+	
 	echo"</br>";
 	//Add to my watch list
 	
@@ -68,6 +118,12 @@
 	}
 	
 	echo "</br>";
+    
+    echo "<form method='POST' action='MoviePage.php?MovieID=".$MovieID."'>
+				Rating: <input name='rating' type='text' >/5</br>
+				Comments: <input  name='comment' type='text'></br>
+				<input name='rated' type='submit'>
+				</form>";
 	
 	//RATING INFO
 	$sql = "SELECT Movie.MovieName, Rating.Rating, Rating.Comment, User.Email
@@ -90,5 +146,11 @@
 	{
 		echo "Error: ". $sql. "<br>". $conn->error;
 	}
+    
+    echo '<form method="POST" action="MoviePage.php?MovieID='.$MovieID.'">';
+    echo '<input name="watchlist" type="submit" value="Add to Watchlist"></input><br/></form>';
+    echo '<form method="POST" action="MoviePage.php?MovieID='.$MovieID.'">';
+    echo '<input name="rent" type="submit" value="Rent This Movie"></input><br/></form>';
+    
 	$conn->close();
 ?>
