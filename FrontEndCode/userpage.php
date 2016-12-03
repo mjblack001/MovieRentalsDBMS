@@ -1,11 +1,17 @@
 <?php
     session_start();
+?>
+<html>
+	<head>
+		<link rel='stylesheet' type='text/css' href='DBFrontEndStyle.css'></link>
+	<head>
+</html>
+<?php
     include("setup.php");
 	if($conn->connect_error)
 	{
 		die("Connection failed: " . $conn->connect_error);
 	}
-    $_SESSION['UserID'] = '2';
     $sql = 'SELECT Email FROM User WHERE UserID = '.$_SESSION['UserID'];
     $result = $conn->query($sql);
 

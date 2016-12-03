@@ -3,16 +3,17 @@
 ?>
 <html>
 	<head>
-		<title>Sign In/Up!</title>
+		<title>Welcome to The Movies Database!</title>
 		<link rel='stylesheet' type='text/css' href='DBFrontEndStyle.css'></link>
 	<head>
-</html>
+<html>
 <?php 
 	include("setup.php");
 	if($conn->connect_error)
 	{
 		die("Connection failed: " . $conn->connect_error);
 	}
+	
 	//var_dump($_POST);
 	if(isset($_POST['login']))
 	{
@@ -28,11 +29,11 @@
 			echo "Welcome, ". $username. "!<br/>";
 			$row = $result->fetch_assoc();
 			$_SESSION['UserID'] = $row['UserID'];
-			//header('location: DBFrontEndStyle.css');
+			header('location: userpage.php');
 		}
 		else
 			echo "User not found. Create New User? </br>
-					<form method='POST' action='connect.php'>
+					<form method='POST' action='signup.php'>
 						Email: <input name='email' type='text' ></br>
 						Password: <input  name='password' type='text'></br>
 						Address: <input  name='address' type='text'></br>
@@ -57,8 +58,7 @@
 			$sql = "INSERT INTO user (Email, Password, Address, UserID) VALUES ('$username', '$password', '$address', '$newID')";
 			if($conn->query($sql) === TRUE)
 			{
-				//header('location: DBFrontEndStyle.css');
-				echo "User Added";
+				header('location: userpage.php');
 			}
 			else
 			{
@@ -67,7 +67,7 @@
 		}
 		else 
 			echo
-				"<form method='POST' action='connect.php'>
+				"<form method='POST' action='signup.php'>
 					Email: <input name='email' type='text' ></br>
 					Password: <input  name='password' type='text'></br>
 					Address: <input  name='address' type='text'></br>
@@ -75,6 +75,13 @@
 				</form>";
 		
 	}
-	echo "Session UserID: ". $_SESSION['UserID'];
+	else
+		echo "<form method='POST' action='signup.php'>
+				Email: <input name='email' type='text' ></br>
+				Password: <input  name='password' type='text'></br>
+				<input name='login' value='Sign In' type='submit'>
+				<input name='register' value='New User?' type='submit'>
+			</form>";
+		
 	$conn->close();
 ?>
