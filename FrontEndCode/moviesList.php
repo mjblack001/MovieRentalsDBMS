@@ -99,7 +99,7 @@
 					AND RentalHistory.UserID = '$uid'
 					AND User.UserID LIKE '$uid'
 					GROUP BY MovieName";
-				break;
+			break;
 		default: $sql = "SELECT MovieName, ReleaseDate, MovieID FROM movie";	
 	}
 	
@@ -108,6 +108,20 @@
 		$SortType = $_POST['SortType'];
 		$sql = $sql. " ORDER BY $SortType";
 		//echo "</br>". $sql. "; ". $conn->error. "</br>";
+	}
+	if(isset($_POST['remove']))
+	{
+		$tempsql = "DELETE FROM watchlist 
+					WHERE UserID=$uid 
+					AND MovieID=$value";
+		if($conn->query($tempsql) === TRUE)
+		{
+			echo "Watchlist updated successfully</br>";
+		}
+		else
+		{
+			echo "ERROR: ". $tempsql. "<br>". $conn->error;
+		}
 	}
 	$result = $conn->query($sql);
 	
@@ -185,13 +199,25 @@
 				echo "<td>". $row["DateRented"]. "</td>";
 				echo "<td>". $row["DateReturned"]. "</td>";
 			}
+			if($type =="WatchList")
+			{
+				echo 
+					"<td>
+						<form method='POST' action='moviesList.php'>
+							<input type='hidden' name='type' value='WatchList'></input>
+							<input type='hidden' name='value' value='$MovieID'></input>
+							<input type='hidden' name='remove' value='remove'></input>
+							<input value='Remove From My Watchlist' type='submit'>
+						</form>
+					</td>";
+			}
 			echo "</tr>";
 		}	
 		echo "</table>";
 	}
 	else
 	{
-		echo "</br>Error: ". $sql. "<br>". $conn->error;
+		echo "No Results Found!";
 	}
 	//echo $sql;
 		
