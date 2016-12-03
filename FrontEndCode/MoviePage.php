@@ -59,11 +59,31 @@
     }
     else if(isset($_POST['rent']))
     {
-        $sql = "INSERT INTO RentalHistory (UserID, MovieID, DateRented, DateReturned) VALUES (".$_SESSION['UserID'].", '.$MovieID.', CURRENT_DATE(), '1900-01-01')";
+        $sql = "INSERT INTO RentalHistory (UserID, MovieID, DateRented, DateReturned) VALUES (".$_SESSION['UserID'].", ".$MovieID.", CURRENT_DATE(), '1900-01-01')";
         $result = $conn->query($sql);
         if($result === TRUE)
 			{
 				header('location: moviesList.php?type=RentalHistory');
+			}
+			else
+			{
+				echo "Error: ". $sql. "<br>". $conn->error;
+			}
+    }
+    if(isset($_POST['rated']))
+    {
+        $sql = "SELECT RatingID FROM Rating ORDER BY RatingID DESC LIMIT 1";
+			$result = $conn->query($sql);
+			$IDCheck = $result->fetch_assoc();
+			$newID = $IDCheck['RatingID'];
+			$newID++;
+        $rating = $_POST['rating'];
+        $comment = $_POST['comment'];
+        $sql = "INSERT INTO Rating (RatingID, Rating, Comment, UserID, MovieID) VALUES (".$newID.", ".$rating.", '".$comment."', ".$_SESSION['UserID'].", ".$MovieID.")";
+        $result = $conn->query($sql);
+        if($result === TRUE)
+			{
+				
 			}
 			else
 			{
@@ -98,6 +118,12 @@
 	}
 	
 	echo "</br>";
+    
+    echo "<form method='POST' action='MoviePage.php?MovieID=".$MovieID."'>
+				Rating: <input name='rating' type='text' >/5</br>
+				Comments: <input  name='comment' type='text'></br>
+				<input name='rated' type='submit'>
+				</form>";
 	
 	//RATING INFO
 	$sql = "SELECT Movie.MovieName, Rating.Rating, Rating.Comment, User.Email
