@@ -7,6 +7,8 @@
 </html>
 
 <?php
+    session_start();
+    $_SESSION['UserID'];
 	include("setup.php");
 	if($conn->connect_error)
 	{
@@ -26,8 +28,8 @@
 			AND Movie.MovieID = Rating.MovieID";
 	
 	$result = $conn->query($sql);
-	
-	if($result->num_rows > 0)
+    
+    if($result->num_rows > 0)
 	{
 		while($row = $result->fetch_assoc())
 		{
@@ -41,6 +43,34 @@
 					"</br>";
 		}
 	}
+    
+    if(isset($_POST['watchlist']))
+    {
+        $sql = "INSERT INTO WatchList (UserID, MovieID) VALUES (".$_SESSION['UserID'].", '.$MovieID.')";
+        $result = $conn->query($sql);
+        if($result === TRUE)
+			{
+				header('location: moviesList.php?type=WatchList');
+			}
+			else
+			{
+				echo "Error: ". $sql. "<br>". $conn->error;
+			}
+    }
+    else if(isset($_POST['rent']))
+    {
+        $sql = "INSERT INTO RentalHistory (UserID, MovieID, DateRented, DateReturned) VALUES (".$_SESSION['UserID'].", '.$MovieID.', CURRENT_DATE(), '1900-01-01')";
+        $result = $conn->query($sql);
+        if($result === TRUE)
+			{
+				header('location: moviesList.php?type=RentalHistory');
+			}
+			else
+			{
+				echo "Error: ". $sql. "<br>". $conn->error;
+			}
+    }
+	
 	echo"</br>";
 	//Add to my watch list
 	
@@ -90,5 +120,11 @@
 	{
 		echo "Error: ". $sql. "<br>". $conn->error;
 	}
+    
+    echo '<form method="POST" action="MoviePage.php?MovieID='.$MovieID.'">';
+    echo '<input name="watchlist" type="submit" value="Add to Watchlist"></input><br/></form>';
+    echo '<form method="POST" action="MoviePage.php?MovieID='.$MovieID.'">';
+    echo '<input name="rent" type="submit" value="Rent This Movie"></input><br/></form>';
+    
 	$conn->close();
 ?>
