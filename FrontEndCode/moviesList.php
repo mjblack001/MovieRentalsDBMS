@@ -13,10 +13,8 @@
 				<option value="ActorName">Actor</option>
 				<option value="DirectorName">Director</option>
 				<option value="GenreName">Genre</option>
-				<option value="WatchList">My Watch List</option>
-				<option value="RentalHistory">My Rental History</option>
 			</select></br>
-			value: <input  name="value" type="text"></br>
+			Search: <input  name="value" type="text"></br>
 			<input type="submit">
 		</form>
 	</body>
@@ -42,7 +40,8 @@
 	}
 	else
 	{
-		$type = "WatchList";
+		$type = $_GET['type'];
+		$value = "some arbitrary and useless value";
 	}
 	
 	$sql='';
