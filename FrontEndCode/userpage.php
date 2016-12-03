@@ -130,7 +130,7 @@
 <input type="submit" value="moviesList.php?type=RentalHistory"></input>
     
       
-<!--<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
   Update User Settings
 </button>
 <div class="collapse" id="collapseExample">
@@ -149,5 +149,9 @@
 			<input type="submit">
       </form>
   </div>
-</div>-->
+</div>
+<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="js/bootstrap.min.js"></script>
     </body></html>
