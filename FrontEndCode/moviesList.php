@@ -1,3 +1,6 @@
+<?php
+    session_start();
+?>
 <html>
 	<head>
 		<title>Movies Page</title>
@@ -21,6 +24,8 @@
 
 <?php 
 	include("setup.php");
+	//$_SESSION['UserID'] = '3'; //TEST SESSION VAR
+ 
 	if($conn->connect_error)
 	{
 		die("Connection failed: " . $conn->connect_error);
@@ -30,7 +35,7 @@
 	{
 		$type = $_POST['type'];
 		$value = $_POST['value'];
-		
+		$uid = $_SESSION['UserID'];
 		
 		$sql='';
 		$valueCheck = "%". $value. "%";
@@ -76,7 +81,7 @@
 						WHERE Movie.MovieID = Rating.MovieID
 						AND watchlist.MovieID = Movie.MovieID
 						AND watchlist.UserID = User.UserID 
-						AND User.UserID LIKE '$value'
+						AND User.UserID LIKE '$uid'
 						GROUP BY MovieName";
 				break;
 			case("RentalHistory");
@@ -84,8 +89,8 @@
 						FROM Movie, Rating, User, RentalHistory
 						WHERE Movie.MovieID = Rating.MovieID
 						AND RentalHistory.MovieID = Movie.MovieID
-						AND RentalHistory.UserID = User.UserID 
-						AND User.UserID LIKE '$value'
+						AND RentalHistory.UserID = '$uid'
+						AND User.UserID LIKE '$uid'
 						GROUP BY MovieName";
 					break;
 			default: $sql = "SELECT MovieName, ReleaseDate, MovieID FROM movie";	
