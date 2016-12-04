@@ -247,7 +247,13 @@
 			if($type =="RentalHistory")
 			{
 				echo "<td>". $row["DateRented"]. "</td>";
-				echo "<td>". $row["DateReturned"]. "</td>";
+				echo "<td>"; 
+                if ($row["DateReturned"] == '1900-01-01'){
+                    echo 'Currently Rented</td>';
+                }
+                else{
+                    echo $row["DateRented"]."</td>";
+                }
 			}
 			if($type =="WatchList")
 			{
