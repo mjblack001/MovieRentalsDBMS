@@ -70,16 +70,64 @@
 		die("Connection failed: " . $conn->connect_error);
 	}
     
+        ?>
+<nav class="navbar navbar-default">
+    <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="userpage.php">DBMS Project</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="moviesList.php?type=WatchList">Watchlist</a></li>
+                <li><a href="moviesList.php?type=RentalHistory">Rental History</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="signup.php?logout=true">Logout</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="row">
+    <div class="input-group">
+        <form method="POST" action="moviesList.php">
+            <div class="col-md-5 col-md-offset-1"> 
+                <input name="value" type="text" class="form-control" placeholder="Search">
+            </div>
+            <div class="col-md-4">
+                <select class="form-control" name="type">
+                    <option value="MovieName">Movie</option>
+                    <option value="ActorName">Actor</option>
+                    <option value="DirectorName">Director</option>
+                    <option value="GenreName">Genre</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input name="update" class="btn btn-default" type="submit" value="Search"><br/>
+            </div>
+        </form>
+    </div>
+</div>
+      <?php
     $sql = 'SELECT Email FROM User WHERE UserID = '.$_SESSION['UserID'];
     $result = $conn->query($sql);
 
 	if($result->num_rows > 0)
 	{
-        echo 'Welcome Back: ';
+        echo '<div class="row"> 
+                <div class="col-md-5 col-md-offset-1">
+                    <h2>Welcome: ';
         while($row = $result->fetch_assoc()) 
 		{
             $username = $row['Email'];
-            echo $username. '<br/>';
+            echo $username. '</h2></div></div>';
         }
     }
 
@@ -90,66 +138,57 @@
             AND RentalHistory.UserID = ".$_SESSION['UserID'];
     
      $result = $conn->query($sql);
-
+?>
+      <div class="row">
+          <div class="col-md-5 col-md-offset-1">
+<?php
 	if($result->num_rows > 0)
 	{
         while($row = $result->fetch_assoc()) 
 		{
+            echo "<h4>You have the following movies rented:</h4><br/>";
             $movie = $row['MovieName'];
             $poster = '<img src= '.$row['Poster'].' height="300" width="200">';
             $due = $row['DueDate'];
-            echo 'You still have <i>'.$movie.'</i> rented <br/>';
+            echo '<i>'.$movie.'</i> due on '.$due.'<br/>';
             echo $poster.'<br/>';
-            echo 'It is due on '.$due.'<br/.>';
         }
     }
     else
     {
-        echo 'You have no movies currently rented<br/>';
+        echo '<h4>You have no movies currently rented</h4><br/>';
     }
             
 ?>
-      <form method="POST" action="userpage.php">
-            Email: <input name="email" type="text" ></br>
-            Password: <input  name="password" type="text"></br>
-            Address: <input  name="address" type="text"></br>
-            <input name='update' type="submit">Update User Information</input>
-    </form>
-<br/><br/>
-<form method="POST" action="moviesList.php">
-			<select name="type">
-				<option value="MovieName">Movie</option>
-				<option value="ActorName">Actor</option>
-				<option value="DirectorName">Director</option>
-				<option value="GenreName">Genre</option>
-			</select></br>
-			value: <input  name="value" type="text"></br>
-			<input type="submit">
-		</form>
-<input type="submit" value="moviesList.php?type=WatchList"></input>
-<input type="submit" value="moviesList.php?type=RentalHistory"></input>
-    
-      
-<button class="btn btn-primary" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
+          </div></div>
+      <br/>
+<div class="row">
+      <div class="col-md-10 col-md-offset-1">
+<button class="btn btn-default" type="button" data-toggle="collapse" data-target="#collapseExample" aria-expanded="false" aria-controls="collapseExample">
   Update User Settings
 </button>
 <div class="collapse" id="collapseExample">
   <div class="well">
-    <form method="POST" action="userpage.php">
+    
 			<div class="input-group">
-                <span class="input-group-addon" id="basic-addon1">Email</span>
-                <input type="text" value="email" class="form-control" placeholder="Email" aria-describedby="basic-addon1">
-                
-                <span class="input-group-addon" id="basic-addon1">Password</span>
-                <input type="text" value="password" class="form-control" placeholder="Password" aria-describedby="basic-addon1">
-                
-                <span class="input-group-addon" id="basic-addon1">Address</span>
-                <input type="text" value="address" class="form-control" placeholder="Address" aria-describedby="basic-addon1">
+                <form method="POST" action="userpage.php">
+                    <input type="text" name="email" class="form-control" placeholder="Email">
+                    <input type="text" name="password" class="form-control" placeholder="Password">
+                    <input type="text" name="address" class="form-control" placeholder="Address">
+                    <input name="update" class="btn btn-default" type="submit" value="Submit Changes">
+                </form>
             </div>
-			<input type="submit">
-      </form>
+    </div>
+			
   </div>
 </div>
+    </div>
+      <br/><br/>
+
+    
+    
+      
+
 <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
     <!-- Include all compiled plugins (below), or include individual files as needed -->

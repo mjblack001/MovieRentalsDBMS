@@ -3,20 +3,70 @@
 ?>
 <html>
 	<head>
+        <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <!-- The above 3 meta tags *must* come first in the head; any other head content must come *after* these tags -->
 		<title>Movies Page</title>
 		<link rel='stylesheet' type='text/css' href='DBFrontEndStyle.css'></link>
+        <!-- Bootstrap -->
+    <script src="js/bootstrap.js"></script>
+      <script src="js/bootstrap.min.js"></script>
+      
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
+      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
+    <![endif]-->
 	<head>
 	<body>
-		<form method="POST" action="moviesList.php">
-			<select name="type">
-				<option value="MovieName">Movie</option>
-				<option value="ActorName">Actor</option>
-				<option value="DirectorName">Director</option>
-				<option value="GenreName">Genre</option>
-			</select></br>
-			Search: <input  name="value" type="text"></br>
-			<input type="submit">
-		</form>
+        <nav class="navbar navbar-default">
+    <div class="container-fluid">
+    <!-- Brand and toggle get grouped for better mobile display -->
+        <div class="navbar-header">
+            <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+                <span class="sr-only">Toggle navigation</span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+                <span class="icon-bar"></span>
+            </button>
+            <a class="navbar-brand" href="userpage.php">DBMS Project</a>
+        </div>
+        <!-- Collect the nav links, forms, and other content for toggling -->
+        <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+            <ul class="nav navbar-nav">
+                <li><a href="moviesList.php?type=WatchList">Watchlist</a></li>
+                <li><a href="moviesList.php?type=RentalHistory">Rental History</a></li>
+            </ul>
+            <ul class="nav navbar-nav navbar-right">
+                <li><a href="signup.php?logout=true">Logout</a></li>
+            </ul>
+        </div><!-- /.navbar-collapse -->
+    </div><!-- /.container-fluid -->
+</nav>
+<div class="row">
+    <div class="input-group">
+        <form method="POST" action="moviesList.php">
+            <div class="col-md-5 col-md-offset-1"> 
+                <input name="value" type="text" class="form-control" placeholder="Search">
+            </div>
+            <div class="col-md-4">
+                <select class="form-control" name="type">
+                    <option value="MovieName">Movie</option>
+                    <option value="ActorName">Actor</option>
+                    <option value="DirectorName">Director</option>
+                    <option value="GenreName">Genre</option>
+                </select>
+            </div>
+            <div class="col-md-2">
+                <input name="update" class="btn btn-default" type="submit" value="Search"><br/>
+            </div>
+        </form>
+    </div>
+</div>
+		
 	</body>
 </html>
 
@@ -127,11 +177,11 @@
 	
 	if($result->num_rows > 0)
 	{
-		echo "
-			<table>
-			<tr>
-				<th>Movie
-						<form method='POST' action='moviesList.php'>
+		echo "<br/><div class='row'>
+                <div class='col-md-10 col-md-offset-1'>
+                <table class='table table-hover'>
+                <th>
+                <form method='POST' action='moviesList.php'>
 						<select name='SortType'>
 						<option value='MovieName ASC'>Movie Name ASC</option>
 						<option value='MovieName DESC'>Movie Name DESC</option>
@@ -140,8 +190,8 @@
 						<input type='submit'>
 						</form>
 				</th>
-				<th>Release Date
-						<form method='POST' action='moviesList.php'>
+				<th>
+                <form method='POST' action='moviesList.php'>
 						<select name='SortType'>
 						<option value='ReleaseDate ASC'>Release Date ASC</option>
 						<option value='ReleaseDate DESC'>Release Date DESC</option>
@@ -150,8 +200,8 @@
 						<input type='submit'>
 						</form>
 				</th>
-					<th>Rating
-						<form method='POST' action='moviesList.php'>
+					<th>
+                    <form method='POST' action='moviesList.php'>
 						<select name='SortType'>
 						<option value='AVG(Rating.Rating) ASC'>Rating ASC</option>
 						<option value='AVG(Rating.Rating) DESC'>Rating DESC</option>
@@ -166,8 +216,8 @@
 		if($type =="DirectorName") echo"<th>Director Name</th>";
 		if($type =="RentalHistory")
 			{
-				echo 	"<th>Date Rented
-						<form method='POST' action='moviesList.php'>
+				echo 	"<th>
+                            <form method='POST' action='moviesList.php'>
 							<select name='SortType'>
 							<option value='DateRented ASC'>Date Rented ASC</option>
 							<option value='DateRented DESC'>Date Rented DESC</option>
@@ -175,8 +225,8 @@
 							<input type='hidden' name='value' value ='$value'></input>
 							<input type='submit'>
 						</form></th>";
-				echo "<th>Date Returned
-						<form method='POST' action='moviesList.php'>
+				echo "<th>
+                        <form method='POST' action='moviesList.php'>
 							<select name='SortType'>
 							<option value='DateReturned ASC'>Date Returned ASC</option>
 							<option value='DateReturned DESC'>Date Returned DESC</option>
@@ -213,11 +263,15 @@
 			}
 			echo "</tr>";
 		}	
-		echo "</table>";
+		echo "</table></div></div>";
 	}
 	else
 	{
-		echo "No Results Found!";
+		echo "<div class='row'>
+                    <div class='col-md-4 col-md-offset-1'>
+                        <h4>No Results Found!</h4>
+                    </div>
+                </div>";
 	}
 	//echo $sql;
 		
