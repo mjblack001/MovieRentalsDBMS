@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.5.0.2
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 06, 2016 at 12:02 AM
--- Server version: 10.1.10-MariaDB
--- PHP Version: 5.6.19
+-- Host: localhost
+-- Generation Time: Dec 06, 2016 at 12:26 AM
+-- Server version: 10.0.17-MariaDB
+-- PHP Version: 5.6.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,7 +17,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `movierental`
+-- Database: `MovieRental`
 --
 
 -- --------------------------------------------------------
@@ -2188,7 +2188,7 @@ INSERT INTO `rentalhistory` (`RentalID`, `UserID`, `MovieID`, `DateRented`, `Dat
 
 CREATE TABLE `user` (
   `UserID` int(11) NOT NULL,
-  `Email` varchar(255) NOT NULL,
+  `Username` varchar(255) NOT NULL,
   `Password` varchar(255) NOT NULL,
   `Address` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -2197,7 +2197,7 @@ CREATE TABLE `user` (
 -- Dumping data for table `user`
 --
 
-INSERT INTO `user` (`UserID`, `Email`, `Password`, `Address`) VALUES
+INSERT INTO `user` (`UserID`, `Username`, `Password`, `Address`) VALUES
 (1, 'abc123@gmail.com', 'abc123', '123 Fake Street, Philadelphia, PA 19131'),
 (2, 'bszefinski@yahoo.com', 'bszefinski', '456 City Avenue, Philadelphia, PA 19006'),
 (3, 'mblack@yahoo.com', 'mblack', '297 Road Street, Merion Station, PA 19151'),
@@ -2322,7 +2322,8 @@ ALTER TABLE `actedin`
 -- Indexes for table `actor`
 --
 ALTER TABLE `actor`
-  ADD PRIMARY KEY (`ActorID`);
+  ADD PRIMARY KEY (`ActorID`),
+  ADD KEY `ActorName` (`ActorName`);
 
 --
 -- Indexes for table `director`
@@ -2342,7 +2343,9 @@ ALTER TABLE `genre`
 ALTER TABLE `movie`
   ADD PRIMARY KEY (`MovieID`),
   ADD KEY `GenreID` (`GenreID`),
-  ADD KEY `DirectorID` (`DirectorID`);
+  ADD KEY `DirectorID` (`DirectorID`),
+  ADD KEY `MovieName` (`MovieName`),
+  ADD KEY `ReleaseDate` (`ReleaseDate`);
 
 --
 -- Indexes for table `rating`
