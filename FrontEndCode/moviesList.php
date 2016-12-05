@@ -94,7 +94,7 @@
 	{
 		$type = $_GET['type'];
 		$value = "some arbitrary and useless value";
-	}
+	}	
 	
 	$sql='';
 	$valueCheck = "%". $value. "%";
@@ -170,11 +170,7 @@
 		$tempsql = "DELETE FROM watchlist 
 					WHERE UserID=$uid 
 					AND MovieID=$value";
-		if($conn->query($tempsql) === TRUE)
-		{
-			echo "Watchlist updated successfully</br>";
-		}
-		else
+		if($conn->query($tempsql) !== TRUE)
 		{
 			echo "ERROR: ". $tempsql. "<br>". $conn->error;
 		}

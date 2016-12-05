@@ -32,11 +32,11 @@
 	//var_dump($_POST);
 	else if(isset($_POST['login']))
 	{
-		$username = $_POST['email'];
+		$username = $_POST['username'];
 		$password = $_POST['password'];
 		
 		//SELECT
-		$sql = "SELECT Email, Password, UserID FROM user WHERE Email = '$username' AND Password = '$password'";
+		$sql = "SELECT Username, Password, UserID FROM user WHERE Username = '$username' AND Password = '$password'";
 		$result = $conn->query($sql);
 		
 		if($result->num_rows > 0)
@@ -51,10 +51,10 @@
 					<br/><form method='POST' action='signup.php' class='form-horizontal'>
                 <div class='row'>
                     <div class='col-md-1 col-md-offset-4'>
-                        <strong>Email:</strong>
+                        <strong>Username:</strong>
                     </div>
                     <div class='col-md-2'>
-                        <input name='email' type='text' class='form-control'>
+                        <input name='username' type='text' class='form-control'>
                     </div>
                 </div>
                 <br/>
@@ -82,10 +82,10 @@
 	}
 	else if(isset($_POST['register']))
 	{
-		if(isset($_POST['email']) && isset($_POST['password']) && isset($_POST['address']))		
+		if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['address']))		
 		{	
 			
-			$username = $_POST['email'];
+			$username = $_POST['username'];
 			$password = $_POST['password'];
 			$address = $_POST['address'];
 			
@@ -95,7 +95,7 @@
 			$newID = $IDCheck['UserID'];
 			$newID++;
 			$_SESSION['UserID'] = $newID;
-			$sql = "INSERT INTO user (Email, Password, Address, UserID) VALUES ('$username', '$password', '$address', '$newID')";
+			$sql = "INSERT INTO user (Username, Password, Address, UserID) VALUES ('$username', '$password', '$address', '$newID')";
 			if($conn->query($sql) === TRUE)
 			{
 				header('location: userpage.php');
@@ -110,10 +110,10 @@
 				"<br/><form method='POST' action='signup.php' class='form-horizontal'>
                 <div class='row'>
                     <div class='col-md-1 col-md-offset-4'>
-                        <strong>Email:</strong>
+                        <strong>Username:</strong>
                     </div>
                     <div class='col-md-2'>
-                        <input name='email' type='text' class='form-control'>
+                        <input name='username' type='text' class='form-control'>
                     </div>
                 </div>
                 <br/>
@@ -156,10 +156,10 @@
 		echo "<br/><form method='POST' action='signup.php' class='form-horizontal'>
                 <div class='row'>
                     <div class='col-md-1 col-md-offset-4'>
-                        <strong>Email:</strong>
+                        <strong>Username:</strong>
                     </div>
                     <div class='col-md-2'>
-                        <input name='email' type='text' class='form-control'>
+                        <input name='username' type='text' class='form-control'>
                     </div>
                 </div>
                 <br/>

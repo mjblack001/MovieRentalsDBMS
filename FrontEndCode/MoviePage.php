@@ -116,10 +116,6 @@
 			{
 				header('location: moviesList.php?type=WatchList');
 			}
-			else
-			{
-				echo "Error: ". $sql. "<br>". $conn->error;
-			}
     }
     else if(isset($_POST['rent']))
     {
@@ -207,7 +203,7 @@
 				</form></div></div>";
 	
 	//RATING INFO
-	$sql = "SELECT Movie.MovieName, Rating.Rating, Rating.Comment, User.Email
+	$sql = "SELECT Movie.MovieName, Rating.Rating, Rating.Comment, User.Username
 			FROM Movie, Rating, User
 			WHERE Movie.MovieID = '$MovieID'
 			AND Rating.UserID = User.UserID
@@ -221,7 +217,7 @@
         echo "<div class='row'><div class='col-md-10 col-md-offset-1'><h3>User Ratings</h3>";		
         while($row = $result->fetch_assoc())
 		{
-			echo "<strong>User:</strong> ".$row['Email']."<br/>
+			echo "<strong>User:</strong> ".$row['Username']."<br/>
                   <strong>Rating:</strong> ".$row['Rating']."/5<br/>";
             if($row['Comment'] != "")
             {

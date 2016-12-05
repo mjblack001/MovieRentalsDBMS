@@ -9,10 +9,10 @@
     
     if(isset($_POST['update']))
    {
-        if(strlen($_POST['email']) > 0){
-            $email = $_POST['email'];
+        if(strlen($_POST['username']) > 0){
+            $username = $_POST['username'];
             $sql = 'UPDATE User
-                    SET Email = "'.$email.'"
+                    SET username = "'.$username.'"
                     WHERE UserID = '.$_SESSION['UserID'];
             $result = $conn->query($sql);
         }
@@ -32,14 +32,14 @@
         }
    }
     
-    $sql = 'SELECT Email FROM User WHERE UserID = '.$_SESSION['UserID'];
+    $sql = 'SELECT Username FROM User WHERE UserID = '.$_SESSION['UserID'];
     $result = $conn->query($sql);
 
 	if($result->num_rows > 0)
 	{
         while($row = $result->fetch_assoc()) 
 		{
-            $username = $row['Email'];
+            $username = $row['username'];
         }
     }
 ?>
@@ -116,7 +116,7 @@
 			</div>
 		</div>
       <?php
-    $sql = 'SELECT Email, Address FROM User WHERE UserID = '.$_SESSION['UserID'];
+    $sql = 'SELECT username, Address FROM User WHERE UserID = '.$_SESSION['UserID'];
     $result = $conn->query($sql);
 
 	if($result->num_rows > 0)
@@ -126,10 +126,10 @@
                     <h2>Welcome, ';
         while($row = $result->fetch_assoc()) 
 		{
-            $username = $row['Email'];
+            $username = $row['username'];
             $address = $row['Address'];
             echo $username. '!</h2>';
-			echo '<h4>Address: </br>'. $address. '</h4></div></div>';
+			echo '<h4>'. $address. '</h4></div></div>';
         }
     }
 
@@ -174,7 +174,7 @@
     
 			<div class="input-group">
                 <form method="POST" action="userpage.php">
-                    <input type="text" name="email" class="form-control" placeholder="Email">
+                    <input type="text" name="username" class="form-control" placeholder="Username">
                     <input type="text" name="password" class="form-control" placeholder="Password">
                     <input type="text" name="address" class="form-control" placeholder="Address">
                     <input name="update" class="btn btn-default" type="submit" value="Submit Changes">
