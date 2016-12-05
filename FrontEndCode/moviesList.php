@@ -19,7 +19,7 @@
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
       <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
+    <![endif]-->	
 	<head>
 	<body>
         <nav class="navbar navbar-default">
@@ -41,6 +41,7 @@
                 <li><a href="moviesList.php?type=RentalHistory">Rental History</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li><a href="userpage.php">User Page</a></li> <!-- LINK TO USER PAGE --------------------------------------->
                 <li><a href="signup.php?logout=true">Logout</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -79,8 +80,9 @@
 		die("Connection failed: " . $conn->connect_error);
 	}
 	
-	$type;
-	$value;
+	
+	$type = "";
+	$value = "";
 	$uid = $_SESSION['UserID'];
 		
 	if(isset($_POST['type']) && isset($_POST['value']))
@@ -88,7 +90,7 @@
 		$type = $_POST['type'];
 		$value = $_POST['value'];
 	}
-	else
+	else if(isset($_GET['type']))
 	{
 		$type = $_GET['type'];
 		$value = "some arbitrary and useless value";
@@ -150,7 +152,11 @@
 					AND User.UserID LIKE '$uid'
 					GROUP BY MovieName";
 			break;
-		default: $sql = "SELECT MovieName, ReleaseDate, MovieID FROM movie";	
+		default: 
+			$sql = "SELECT Movie.MovieName, Movie.MovieID, Movie.ReleaseDate, AVG(Rating.Rating)
+					FROM Movie, Rating
+					WHERE Movie.MovieID = Rating.MovieID
+					GROUP BY MovieName";
 	}
 	
 	if(isset($_POST['SortType']))
@@ -175,7 +181,7 @@
 	}
 	$result = $conn->query($sql);
 	
-	if($result->num_rows > 0)
+	if($result != FALSE && $result->num_rows > 0)
 	{
 		echo "<br/><div class='row'>
                 <div class='col-md-10 col-md-offset-1'>

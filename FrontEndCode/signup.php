@@ -146,8 +146,10 @@
 	else{
         if(isset($_GET['logout'])){
             $logout = $_GET['logout'];
-            if ($logout == 'true'){
-                $_SESSION['UserID'] = "";
+            if ($logout == 'true')
+			{
+				session_unset(); 
+				session_destroy(); 
             }
         echo '<div class="alert alert-warning" role="alert">You have been logged out</div>';
         }

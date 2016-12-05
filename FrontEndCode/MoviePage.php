@@ -1,4 +1,3 @@
-
 <html>
 	<head>
         <meta charset="utf-8">
@@ -30,7 +29,6 @@
 		die("Connection failed: " . $conn->connect_error);
 	}
 	
-	
 	$MovieID = $_GET['MovieID'];
 ?>
 <nav class="navbar navbar-default">
@@ -52,6 +50,7 @@
                 <li><a href="moviesList.php?type=RentalHistory">Rental History</a></li>
             </ul>
             <ul class="nav navbar-nav navbar-right">
+                <li><a href="userpage.php">User Page</a></li>
                 <li><a href="signup.php?logout=true">Logout</a></li>
             </ul>
         </div><!-- /.navbar-collapse -->
@@ -144,13 +143,19 @@
 			$newID++;
         $rating = $_POST['rating'];
         $comment = $_POST['comment'];
-        $sql = "INSERT INTO Rating (RatingID, Rating, Comment, UserID, MovieID) VALUES (".$newID.", ".$rating.", '".$comment."', ".$_SESSION['UserID'].", ".$MovieID.")";
+		
+		if($rating > 5)
+			$rating = 5;
+		else if($rating < 0)
+			$rating = 0;
+        if(strstr($comment,"'") !== FALSE)
+		{
+			$comment = str_replace("'","''", $comment);
+		}
+		
+		$sql = "INSERT INTO Rating (RatingID, Rating, Comment, UserID, MovieID) VALUES (".$newID.", ".$rating.", '".$comment."', ".$_SESSION['UserID'].", ".$MovieID.")";
         $result = $conn->query($sql);
-        if($result === TRUE)
-			{
-				
-			}
-			else
+        if($result != TRUE)
 			{
 				echo "Error: ". $sql. "<br>". $conn->error;
 			}
