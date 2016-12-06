@@ -22,6 +22,20 @@
     <![endif]-->
 	<head>
 <html>
+    <nav class="navbar navbar-default">
+			<div class="container-fluid">
+			<!-- Brand and toggle get grouped for better mobile display -->
+				<div class="navbar-header">
+					<button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
+						<span class="sr-only">Toggle navigation</span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+						<span class="icon-bar"></span>
+					</button>
+					<a class="navbar-brand" href="signup.php">DBMS Project</a>
+				</div>
+			</div><!-- /.container-fluid -->
+		</nav>
 <?php 
 	include("setup.php");
 	if($conn->connect_error)
@@ -89,7 +103,7 @@
 		{
 			if(empty($_POST['username']))
 			{
-				echo "Error: Username required</br>";
+				echo "<div class='alert alert-danger' role='alert'>Error: Username required</div>";
 				$passed = FALSE;
 			}
 			else
@@ -100,19 +114,19 @@
 				$result = $result->fetch_assoc();
 				if(isset($result))
 				{
-					echo "Username: ". $result['Username']. " already taken.";
+					echo "<div class='alert alert-danger' role='alert'>Username: ". $result['Username']. " already taken</div>";
 					$passed = FALSE;
 				}
 			}
 				
 			if(empty($_POST['password']))
 			{
-				echo "Error: Password required</br>";
+				echo "<div class='alert alert-danger' role='alert'>Error: Password required</div>";
 				$passed = FALSE;
 			}
 			if(empty($_POST['address']))
 			{
-				echo "Error: Address required</br>";
+				echo "<div class='alert alert-danger' role='alert'>Error: Address required</div>";
 				$passed = FALSE;
 			}
 		}
