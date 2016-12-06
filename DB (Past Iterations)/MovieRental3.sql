@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Host: localhost
--- Generation Time: Dec 06, 2016 at 06:56 PM
+-- Generation Time: Dec 06, 2016 at 12:36 AM
 -- Server version: 10.0.17-MariaDB
 -- PHP Version: 5.6.14
 
@@ -2177,7 +2177,8 @@ INSERT INTO `rentalhistory` (`RentalID`, `UserID`, `MovieID`, `DateRented`, `Dat
 (257, 12, 135, '2016-11-20', '2016-11-30'),
 (258, 3, 145, '2016-11-22', '2016-11-30'),
 (259, 8, 25, '2016-12-01', '2016-12-04'),
-(260, 20, 39, '2016-12-02', '2016-12-06');
+(260, 20, 39, '2016-12-02', '2016-12-06'),
+(261, 22, 1, '2016-12-05', '1900-01-01');
 
 -- --------------------------------------------------------
 
@@ -2217,7 +2218,8 @@ INSERT INTO `user` (`UserID`, `Username`, `Password`, `Address`) VALUES
 (18, 'ndesmond@hotmail.com', 'salome', '10066 Sunset Boulevard, Hollywood, California 38372'),
 (19, 'dsv@gmail.com', 'strwrs4lf', '2039 South Street, Dallas, TX 19283'),
 (20, 'acarroll@yahoo.com', 'letsgo!!!', '29378 Right Avenue, Sierra Vista, Arizona 30484'),
-(21, 'jbethersonton@aol.com', 'butterball', '11454 Pruder Street, Fargo, ND, 50504, APT 23-R');
+(21, 'jbethersonton@aol.com', 'butterball', '11454 Pruder Street, Fargo, ND, 50504, APT 23-R'),
+(22, 'markblack001@gmail.com', 'password', 'address');
 
 -- --------------------------------------------------------
 
@@ -2301,7 +2303,8 @@ INSERT INTO `watchlist` (`UserID`, `MovieID`) VALUES
 (20, 153),
 (21, 4),
 (21, 166),
-(21, 177);
+(21, 177),
+(22, 1);
 
 --
 -- Indexes for dumped tables
@@ -2398,7 +2401,7 @@ ALTER TABLE `actedin`
 -- Constraints for table `movie`
 --
 ALTER TABLE `movie`
-  ADD CONSTRAINT `movie_ibfk_1` FOREIGN KEY (`GenreID`) REFERENCES `genre` (`GenreID`) ON UPDATE CASCADE,
+  ADD CONSTRAINT `movie_ibfk_1` FOREIGN KEY (`GenreID`) REFERENCES `genre` (`GenreID`),
   ADD CONSTRAINT `movie_ibfk_2` FOREIGN KEY (`DirectorID`) REFERENCES `director` (`DirectorID`);
 
 --
@@ -2413,7 +2416,7 @@ ALTER TABLE `rating`
 --
 ALTER TABLE `rentalhistory`
   ADD CONSTRAINT `rentalhistory_ibfk_1` FOREIGN KEY (`MovieID`) REFERENCES `movie` (`MovieID`),
-  ADD CONSTRAINT `rentalhistory_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON DELETE CASCADE ON UPDATE CASCADE;
+  ADD CONSTRAINT `rentalhistory_ibfk_2` FOREIGN KEY (`UserID`) REFERENCES `user` (`UserID`) ON UPDATE CASCADE;
 
 --
 -- Constraints for table `watchlist`
