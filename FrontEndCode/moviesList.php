@@ -93,7 +93,6 @@
 	else if(isset($_GET['type']))
 	{
 		$type = $_GET['type'];
-		$value = "some arbitrary and useless value";
 	}	
 	
 	$sql='';

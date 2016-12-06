@@ -28,14 +28,15 @@
 	{
 		die("Connection failed: " . $conn->connect_error);
 	}
-	
 	//var_dump($_POST);
-	else if(isset($_POST['login']))
+	if(isset($_POST['login']) && isset($_POST['password']))
 	{
 		$username = $_POST['username'];
 		$password = $_POST['password'];
 		
+		
 		//SELECT
+		
 		$sql = "SELECT Username, Password, UserID FROM user WHERE Username = '$username' AND Password = '$password'";
 		$result = $conn->query($sql);
 		
@@ -82,18 +83,52 @@
 	}
 	else if(isset($_POST['register']))
 	{
-		if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['address']))		
+		$passed = TRUE;
+		
+		if(isset($_POST['username']) && isset($_POST['password']) && isset($_POST['address']))	
+		{
+			if(empty($_POST['username']))
+			{
+				echo "Error: Username required</br>";
+				$passed = FALSE;
+			}
+			else
+			{
+				$UserCheck= $_POST['username'];
+				$sql = "SELECT Username FROM user WHERE Username = '$UserCheck'";
+				$result = $conn->query($sql);
+				$result = $result->fetch_assoc();
+				if(isset($result))
+				{
+					echo "Username: ". $result['Username']. " already taken.";
+					$passed = FALSE;
+				}
+			}
+				
+			if(empty($_POST['password']))
+			{
+				echo "Error: Password required</br>";
+				$passed = FALSE;
+			}
+			if(empty($_POST['address']))
+			{
+				echo "Error: Address required</br>";
+				$passed = FALSE;
+			}
+		}
+		else
+			$passed = FALSE;
+		
+		if($passed)
 		{	
-			
 			$username = $_POST['username'];
 			$password = $_POST['password'];
-			$address = $_POST['address'];
-			
 			$sql = "SELECT UserID FROM user ORDER BY UserID DESC LIMIT 1";
 			$result = $conn->query($sql);
 			$IDCheck = $result->fetch_assoc();
 			$newID = $IDCheck['UserID'];
 			$newID++;
+			
 			$_SESSION['UserID'] = $newID;
 			$sql = "INSERT INTO user (Username, Password, Address, UserID) VALUES ('$username', '$password', '$address', '$newID')";
 			if($conn->query($sql) === TRUE)
@@ -143,15 +178,29 @@
             </form>";
 		
 	}
-	else{
-        if(isset($_GET['logout'])){
+	else
+	{
+        if(isset($_GET['logout']))
+		{
             $logout = $_GET['logout'];
             if ($logout == 'true')
 			{
 				session_unset(); 
 				session_destroy(); 
             }
-        echo '<div class="alert alert-warning" role="alert">You have been logged out</div>';
+			echo '<div class="alert alert-warning" role="alert">You have been logged out</div>';
+        }
+		if(isset($_POST['delete']))
+		{
+			$UsertoDelete = $_SESSION['UserID'];
+			$sql = "DELETE FROM USER where UserID ='$UsertoDelete'";
+			if($conn->query($sql) === FALSE)
+			{
+				echo "Error: ". $sql. "<br>". $conn->error;
+			}
+			session_unset(); 
+			session_destroy(); 
+			echo '<div class="alert alert-warning" role="alert">Your Account has been deleted</div>';
         }
 		echo "<br/><form method='POST' action='signup.php' class='form-horizontal'>
                 <div class='row'>

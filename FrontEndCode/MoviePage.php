@@ -81,15 +81,15 @@
 <?php
 	//MOVIE INFO 
 	
-	$sql = "SELECT Movie.MovieName, Movie.ReleaseDate, AVG(Rating.Rating), Movie.Poster, Genre.GenreName, Director.DirectorName
-			FROM Movie, rating, director, genre
-			WHERE Movie.MovieID = '$MovieID'
-			AND Movie.GenreID = Genre.GenreID
-			AND Movie.DirectorID = Director.DirectorID
-			AND Movie.MovieID = Rating.MovieID";
+	$sql =  "SELECT Movie.MovieName, Movie.ReleaseDate, AVG(Rating.Rating), Movie.Poster, Genre.GenreName, Director.DirectorName
+							FROM Movie, rating, director, genre
+							WHERE Movie.MovieID = $MovieID
+							AND Movie.GenreID = Genre.GenreID
+							AND Movie.DirectorID = Director.DirectorID
+							AND Movie.MovieID = Rating.MovieID";
 	
 	$result = $conn->query($sql);
-    
+	
     if($result->num_rows > 0)
 	{
 		while($row = $result->fetch_assoc())
@@ -209,8 +209,6 @@
 			AND Rating.UserID = User.UserID
 			AND Rating.MovieID = Movie.MovieID";
 	$result = $conn->query($sql);
-	
-    
         
 	if($result->num_rows > 0)
 	{

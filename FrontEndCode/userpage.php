@@ -39,7 +39,7 @@
 	{
         while($row = $result->fetch_assoc()) 
 		{
-            $username = $row['username'];
+            $username = $row['Username'];
         }
     }
 ?>
@@ -178,6 +178,9 @@
                     <input type="text" name="password" class="form-control" placeholder="Password">
                     <input type="text" name="address" class="form-control" placeholder="Address">
                     <input name="update" class="btn btn-default" type="submit" value="Submit Changes">
+                </form>
+				<form method="POST" action="signup.php">
+                    <input name="delete" class="btn btn-danger" type="submit" value="Delete Account">
                 </form>
             </div>
     </div>
