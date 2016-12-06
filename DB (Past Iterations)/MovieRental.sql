@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.5.1
+-- version 4.5.0.2
 -- http://www.phpmyadmin.net
 --
--- Host: 127.0.0.1
--- Generation Time: Dec 06, 2016 at 08:52 PM
--- Server version: 10.1.10-MariaDB
--- PHP Version: 5.6.19
+-- Host: localhost
+-- Generation Time: Dec 06, 2016 at 06:56 PM
+-- Server version: 10.0.17-MariaDB
+-- PHP Version: 5.6.14
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET time_zone = "+00:00";
@@ -17,11 +17,11 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `movierental`
+-- Database: `MovieRental`
 --
+
 -- --------------------------------------------------------
-CREATE DATABASE MovieRental;
-Use MovieRental;
+
 --
 -- Table structure for table `actedin`
 --
@@ -1897,8 +1897,7 @@ INSERT INTO `rating` (`RatingID`, `Rating`, `Comment`, `UserID`, `MovieID`) VALU
 (260, 3, '', 8, 25),
 (261, 3, '', 9, 110),
 (262, 4, '', 10, 217),
-(263, 5, 'I don''t get it, is it supposed to be funny?', 1, 21),
-(264, 4, 'Seriously underrated movie. It was pretty good, if you don''t count the bad parts.', 3, 144);
+(263, 5, 'I don''t get it, is it supposed to be funny?', 1, 21);
 
 -- --------------------------------------------------------
 
@@ -2198,27 +2197,27 @@ CREATE TABLE `user` (
 --
 
 INSERT INTO `user` (`UserID`, `Username`, `Password`, `Address`) VALUES
-(1, 'abc123', 'abc123', '123 Fake Street, Philadelphia, PA 19131'),
-(2, 'bszefinski', 'bszefinski', '456 City Avenue, Philadelphia, PA 19006'),
-(3, 'mblack', 'mblack', '297 Road Street, Merion Station, PA 19151'),
-(4, 'sfields', 'sfields', '945 Drive Way, Narberth, PA 19066'),
-(5, 'scooney', 'scooney', '731 Privet Drive, Philadelphia, PA 19151'),
-(6, 'anochenson', 'anochenson', '146 Real Street, Bryn Mawr, PA 19066'),
-(7, 'mkrueger', 'mkrueger', '269 Park Way, Philadelphia, PA 19131'),
-(8, 'psherman', 'darla', '42 Wallaby Way, Sydney, Australia'),
-(9, 'jondoe297', 'parkalley', '1 Wayne Way, Gotham City, NY 49382'),
-(10, 'joeschmoe', 'josephschmoseph', '12 Imaginary Way, Lincoln, NE 84739'),
-(11, 'bkane', 'bkane', '2900 Citrus Street, West Orange, NJ 07015'),
-(12, 'bkaner', 'brendankane', '1516 Stiles Street, Linden, NJ 07016'),
-(13, 'bjoel', 'onlythegooddieyoung', '1309 52 Street, Allentown, PA 90381'),
-(14, 'msibona', 'flyeaglesfly', '1400 122 Street, New York, New York 73612'),
-(15, 'chrisbell', 'chem4life', '3928 West Avenue, Boise, Idaho 89382'),
-(16, 'potus', 'barryo', '1600 Pennsylvania Avenue NW, Washington, DC 20500'),
-(17, 'santa', 'cringle', '325 S Santa Claus Lane, North Pole, Alaska 99705'),
-(18, 'ndesmond', 'salome', '10066 Sunset Boulevard, Hollywood, California 38372'),
-(19, 'dsv', 'strwrs4lf', '2039 South Street, Dallas, TX 19283'),
-(20, 'acarroll', 'letsgo!!!', '29378 Right Avenue, Sierra Vista, Arizona 30484'),
-(21, 'jbethersonton', 'butterball', '11454 Pruder Street, Fargo, ND, 50504, APT 23-R');
+(1, 'abc123@gmail.com', 'abc123', '123 Fake Street, Philadelphia, PA 19131'),
+(2, 'bszefinski@yahoo.com', 'bszefinski', '456 City Avenue, Philadelphia, PA 19006'),
+(3, 'mblack@yahoo.com', 'mblack', '297 Road Street, Merion Station, PA 19151'),
+(4, 'sfields@gmail.com', 'sfields', '945 Drive Way, Narberth, PA 19066'),
+(5, 'scooney@gmail.com', 'scooney', '731 Privet Drive, Philadelphia, PA 19151'),
+(6, 'anochenson@yahoo.com', 'anochenson', '146 Real Street, Bryn Mawr, PA 19066'),
+(7, 'mkrueger@gmail.com', 'mkrueger', '269 Park Way, Philadelphia, PA 19131'),
+(8, 'psherman@gmail.au', 'darla', '42 Wallaby Way, Sydney, Australia'),
+(9, 'jondoe297@yahoo.com', 'parkalley', '1 Wayne Way, Gotham City, NY 49382'),
+(10, 'joeschmoe@aol.com', 'josephschmoseph', '12 Imaginary Way, Lincoln, NE 84739'),
+(11, 'bkane@gmail.com', 'bkane', '2900 Citrus Street, West Orange, NJ 07015'),
+(12, 'bkaner@yahoo.com', 'brendankane', '1516 Stiles Street, Linden, NJ 07016'),
+(13, 'bjoel@aol.com', 'onlythegooddieyoung', '1309 52 Street, Allentown, PA 90381'),
+(14, 'msibona@yahoo.com', 'flyeaglesfly', '1400 122 Street, New York, New York 73612'),
+(15, 'chrisbell@gmail.com', 'chem4life', '3928 West Avenue, Boise, Idaho 89382'),
+(16, 'potus@whitehouse.gov', 'barryo', '1600 Pennsylvania Avenue NW, Washington, DC 20500'),
+(17, 'santa@northpole.net', 'cringle', '325 S Santa Claus Lane, North Pole, Alaska 99705'),
+(18, 'ndesmond@hotmail.com', 'salome', '10066 Sunset Boulevard, Hollywood, California 38372'),
+(19, 'dsv@gmail.com', 'strwrs4lf', '2039 South Street, Dallas, TX 19283'),
+(20, 'acarroll@yahoo.com', 'letsgo!!!', '29378 Right Avenue, Sierra Vista, Arizona 30484'),
+(21, 'jbethersonton@aol.com', 'butterball', '11454 Pruder Street, Fargo, ND, 50504, APT 23-R');
 
 -- --------------------------------------------------------
 
@@ -2246,11 +2245,6 @@ INSERT INTO `watchlist` (`UserID`, `MovieID`) VALUES
 (2, 181),
 (2, 192),
 (2, 213),
-(3, 1),
-(3, 20),
-(3, 28),
-(3, 37),
-(3, 144),
 (4, 11),
 (4, 32),
 (4, 185),
